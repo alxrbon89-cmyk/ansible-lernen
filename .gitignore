@@ -1,0 +1,7 @@
+
+
+hosts
+.DS_Store
+.vault_password
+ansible_cron.log
+

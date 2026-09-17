@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Ansible Managed Node</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; background: #f4f4f9; color: #333; }
+        .card { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
+        h1 { color: #0066cc; }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h1>{{ custom_web_title }}</h1>
+        <p>Diese Seite wurde vollautomatisch mit <strong>Ansible</strong> bereitgestellt.</p>
+        
+        <hr>
+        
+        <h3>System-Informationen:</h3>
+        <ul>
+            <li><strong>Administrator:</strong> {{ custom_admin_name }}</li>
+            <li><strong>Server-Hostname:</strong> {{ ansible_hostname }}</li>
+            <li><strong>Betriebssystem:</strong> {{ ansible_distribution }} {{ ansible_distribution_version }}</li>
+            <li><strong>IP-Adresse:</strong> {{ ansible_default_ipv4.address }}</li>
+        </ul>
+        <p style="color: #666; font-size: 0.8em;">Zuletzt aktualisiert am: {{ ansible_date_time.date }} um {{ ansible_date_time.time }}</p>
+    </div>
+</body>
+</html>
+

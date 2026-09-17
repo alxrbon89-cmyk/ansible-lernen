@@ -1,0 +1,5 @@
+---
+# Variablen für die Webserver-Gruppe
+custom_web_title: "Willkommen auf meiner automatisierten Infrastruktur!"
+custom_admin_name: "testuser"
+ansible_python_interpreter: /usr/bin/python3

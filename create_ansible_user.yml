@@ -1,0 +1,33 @@
+---
+- name: Dedizierten Service-User für Automatisierung anlegen
+  hosts: meine_server
+  become: yes
+
+  tasks:
+    - name: Gruppe 'ansible' als System-Gruppe erstellen
+      group:
+        name: ansible
+        state: present
+        system: yes  # <-- Macht es zu einer System-Gruppe (< 1000)
+
+    - name: Service-User 'ansible' als System-User anlegen
+      user:
+        name: ansible
+        group: ansible
+        shell: /bin/bash
+        create_home: yes
+        system: yes  # <-- Macht es zu einer System-UID (< 1000)
+
+    - name: SSH-Schlüssel für den neuen User hinterlegen
+      authorized_key:
+        user: ansible
+        state: present
+        key: "{{ lookup('file', '~/.ssh/id_ed25519.pub') }}"
+
+    - name: Passwortloses Sudo für den neuen User erlauben
+      lineinfile:
+        path: /etc/sudoers
+        state: present
+        line: "ansible ALL=(ALL) NOPASSWD:ALL"
+        validate: '/usr/sbin/visudo -cf %s'
+

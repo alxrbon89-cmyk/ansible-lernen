@@ -1,0 +1,44 @@
+---
+# Task 1: Firewall auf Ubuntu (UFW) für den neuen sicheren SSH-Port 2222 öffnen
+- name: Erlaube Custom SSH-Port 2222 auf Ubuntu
+  ansible.builtin.ufw:
+    rule: allow
+    port: "2222"
+    proto: tcp
+  when: ansible_os_family == "Debian"
+
+# Task 2: Firewall auf CentOS (Firewalld) für den neuen sicheren SSH-Port 2222 öffnen
+- name: Erlaube Custom SSH-Port 2222 auf CentOS
+  ansible.posix.firewalld:
+    port: 2222/tcp
+    permanent: true
+    state: enabled
+    immediate: true
+  when: ansible_os_family == "RedHat"
+
+
+# Task NEU: SELinux auf CentOS erlauben, den Port 2222 für SSH zu nutzen
+- name: Erlaube SSH den Custom-Port 2222 in SELinux (nur CentOS)
+  community.general.seport:
+    ports: 2222
+    proto: tcp
+    setype: ssh_port_t
+    state: present
+  when: ansible_facts['os_family'] == "RedHat"
+
+
+
+# Task 3: SSH-Konfiguration anpassen (Port, Root-Login und Passwörter sperren)
+- name: Sichere SSH-Konfigurationsdatei (sshd_config) anpassen
+  ansible.builtin.lineinfile:
+    path: /etc/ssh/sshd_config
+    regexp: "{{ item.regexp }}"
+    line: "{{ item.line }}"
+    state: present
+    validate: /usr/sbin/sshd -t -f %s
+  loop:
+    - { regexp: "^#?Port ", line: "Port 2222" }
+    - { regexp: "^#?PermitRootLogin ", line: "PermitRootLogin no" }
+    - { regexp: "^#?PasswordAuthentication ", line: "PasswordAuthentication no" }
+  notify: Starte SSH-Dienst neu
+

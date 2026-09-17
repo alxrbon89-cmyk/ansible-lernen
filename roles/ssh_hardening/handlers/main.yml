@@ -1,0 +1,6 @@
+#Handler: Startet den SSH-Dienst plattformübergreifend neu
+- name: Starte SSH-Dienst neu
+  ansible.builtin.service:
+    name: "{{ (ansible_os_family == 'Debian') | ternary('ssh', 'sshd') }}"
+    state: restarted
+

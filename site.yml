@@ -1,0 +1,12 @@
+
+---
+- name: Server absichern und Webserver einrichten
+  hosts: meine_server
+  become: yes
+  roles:
+    - users
+    - ssh_hardening  # <-- NEU: Zuerst die Server sicher machen
+    - webserver      # <-- Bestehend: Danach den Webserver installieren
+#
+
+

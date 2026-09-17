@@ -1,0 +1,22 @@
+---
+- name: System-Updates auf allen Linux-Systemen ausführen
+  hosts: meine_server
+  become: yes
+
+  tasks:
+    # === 1. UBUNTU / DEBIAN UPDATES ===
+    - name: Paketquellen aktualisieren und Upgrades installieren (Ubuntu)
+      apt:
+        update_cache: yes
+        upgrade: dist
+        autoremove: yes
+      when: ansible_facts['os_family'] == "Debian"
+
+    # === 2. CENTOS / REDHAT UPDATES ===
+    - name: Alle Pakete auf den neuesten Stand bringen (CentOS 9)
+      dnf:
+        name: "*"
+        state: latest
+        update_cache: yes
+      when: ansible_facts['os_family'] == "RedHat"
+

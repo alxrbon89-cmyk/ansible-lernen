@@ -1,0 +1,60 @@
+---
+# === 0. STÖRENFRIEDE ENTFERNEN (Nur für CentOS/RedHat) ===
+- name: Apache (httpd) Dienst stoppen, falls aktiv
+  service:
+    name: httpd
+    state: stopped
+  failed_when: false
+  when: ansible_os_family == "RedHat"
+
+- name: Apache (httpd) Paket restlos deinstallieren
+  dnf:
+    name: httpd
+    state: absent
+  when: ansible_os_family == "RedHat"
+
+# === 1. INSTALLATION ===
+- name: Nginx auf Ubuntu (Debian) installieren
+  apt:
+    name: nginx
+    state: present
+    update_cache: yes
+  when: ansible_os_family == "Debian"
+
+- name: Nginx auf CentOS (RedHat) installieren
+  dnf:
+    name: nginx
+    state: present
+  when: ansible_os_family == "RedHat"
+
+# === 2. FIREWALL (Nur für CentOS nötig) ===
+- name: HTTP-Port in CentOS Firewall freischalten
+  firewalld:
+    service: http
+    permanent: yes
+    state: enabled
+    immediate: yes
+  when: ansible_os_family == "RedHat"
+
+# === 3. DIENST STARTEN ===
+- name: Nginx Dienst starten und aktivieren
+  service:
+    name: nginx
+    state: started
+    enabled: yes
+
+# === 4. DYNAMISCHES TEMPLATE BEREITSTELLEN ===
+- name: Dynamische index.html auf Ubuntu bereitstellen
+  template:
+    src: index.html.j2
+    dest: /var/www/html/index.html
+    mode: '0644'
+  when: ansible_os_family == "Debian"
+
+- name: Dynamische index.html auf CentOS bereitstellen
+  template:
+    src: index.html.j2
+    dest: /usr/share/nginx/html/index.html
+    mode: '0644'
+  when: ansible_os_family == "RedHat"
+

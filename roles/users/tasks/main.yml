@@ -1,0 +1,14 @@
+---
+- name: Erstelle den Labor-Benutzer mit Einmalpasswort
+  ansible.builtin.user:
+    name: "testuser"
+    password: "{{ vault_secret_user_password | password_hash('sha512') }}"
+    shell: /bin/bash
+    update_password: on_create  # Setzt das Passwort NUR beim Erstellen, überschreibt es später nicht
+    state: present
+  register: user_creation
+
+- name: Zwinge den Benutzer zum Passwortwechsel beim ersten Login
+  ansible.builtin.command: "chage -d 0 testuser"
+  when: user_creation.changed
+
