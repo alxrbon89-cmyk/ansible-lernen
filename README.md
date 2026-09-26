@@ -18,8 +18,8 @@ In diesem Repository dokumentiere ich meine Schritte mit Ansible. Der Fokus lieg
 * **Enterprise Secret Management:** Vollständige AES-256-Bit-Verschlüsselung aller sensiblen Daten über **Ansible-Vault**.
 
 ## Zertifizierungen & Status
-* **LPIC-1 (Prüfung 101-500):** Erfolgreich abgeschlossen mit **92,5%**.
-* **LPIC-1 (Prüfung 102-500):** In Vorbereitung (Prüfungstermin 02. Oktober 2026).
+* **LPIC-1 (Prüfung 101-500):** Erfolgreich abgeschlossen mit **92,5%** (740/800) Punkte.
+* **LPIC-1 (Prüfung 102-500):** Erfolgreich abgeschlossen mit **97,5%** (780/800) Punkten.
 
 ---
 *Dieses Repository zeigt meine Reise in die Linux-Systemadministration. Ich nutze praxisnahe Tools, um Code strukturiert zu testen und in meinem Lab zu implementieren.*
