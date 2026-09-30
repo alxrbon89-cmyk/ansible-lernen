@@ -1,5 +1,23 @@
 ---
-# === 0. STÖRENFRIEDE ENTFERNEN (Nur für CentOS/RedHat) ===
+# === 0. STÖRENFRIEDE ENTFERNEN ===
+# Beide Distributionen bringen einen vorinstallierten Apache mit, der Port 80
+# belegt und Nginx am Start hindert. Er wird deshalb vorab entfernt —
+# unter Ubuntu als "apache2", unter CentOS als "httpd".
+
+- name: Apache (apache2) Dienst stoppen, falls aktiv
+  service:
+    name: apache2
+    state: stopped
+  failed_when: false
+  when: ansible_facts['os_family'] == "Debian"
+
+- name: Apache (apache2) samt Konfigurationsdateien entfernen
+  apt:
+    name: apache2
+    state: absent
+    purge: yes
+  when: ansible_facts['os_family'] == "Debian"
+
 - name: Apache (httpd) Dienst stoppen, falls aktiv
   service:
     name: httpd
