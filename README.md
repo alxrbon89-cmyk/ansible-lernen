@@ -40,7 +40,7 @@ Das Projekt wurde nach Best-Practice-Ansätzen für produktionsreife Infrastruct
 
 * **Vorgeschaltetes SSH-Hardening:** Bevor Anwendungssoftware installiert wird, sichert die Rolle `ssh_hardening` die Systeme ab. Sie verschiebt den SSH-Port auf `2222`, erzwingt reine Schlüssel-Authentifizierung (`PasswordAuthentication no`) und verbietet den direkten Root-Zugriff.
 * **Plattformübergreifendes Deployment:** Intelligente Erkennung der Betriebssystem-Familie mittels Ansible Facts zur Laufzeit. Ansible wählt vollautomatisch den richtigen Paketmanager (`apt` vs. `dnf`) und die korrekten Web-Pfade.
-* **Zero-Touch Automation (Cronjob):** Das System-Update-Playbook (`update_system.yml`) ist für die vollautomatische, passwortlose Ausführung im nächtlichen Wartungsfenster konfiguriert.
+* **Zero-Touch Automation (Cronjob):** Das System-Update-Playbook (`update_system.yml`) ist für die vollautomatische, passwortlose Ausführung täglich um 16:00 Uhr konfiguriert.
 * **Geheimnis-Schutz (Ansible-Vault):** Sämtliche sicherheitskritischen Variablen (wie verschlüsselte Linux-Passwörter) sind per AES-256 kryptografisch geschützt. Sie können gefahrlos im Repository eingecheckt werden, während das Master-Passwort lokal isoliert bleibt.
 * **Modularität via Roles:** Strikte Trennung von Logik und Konfiguration durch die Auslagerung des Codes in die wiederverwendbaren Rollen `ssh_hardening`, `webserver` und `users`.
 * **Dynamische Jinja2-Templates:** Die `index.html` wird zur Laufzeit dynamisch generiert. Sie liest automatisch die Live-Systemdaten der jeweiligen VM (Hostname, OS-Distribution, IP-Adresse) sowie benutzerdefinierte Variablen aus.
