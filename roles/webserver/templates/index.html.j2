@@ -18,11 +18,11 @@
         <h3>System-Informationen:</h3>
         <ul>
             <li><strong>Administrator:</strong> {{ custom_admin_name }}</li>
-            <li><strong>Server-Hostname:</strong> {{ ansible_hostname }}</li>
-            <li><strong>Betriebssystem:</strong> {{ ansible_distribution }} {{ ansible_distribution_version }}</li>
-            <li><strong>IP-Adresse:</strong> {{ ansible_default_ipv4.address }}</li>
+            <li><strong>Server-Hostname:</strong> {{ ansible_facts['hostname'] }}</li>
+            <li><strong>Betriebssystem:</strong> {{ ansible_facts['distribution'] }} {{ ansible_facts['distribution_version'] }}</li>
+            <li><strong>IP-Adresse:</strong> {{ ansible_facts['default_ipv4']['address'] }}</li>
         </ul>
-        <p style="color: #666; font-size: 0.8em;">Zuletzt aktualisiert am: {{ ansible_date_time.date }} um {{ ansible_date_time.time }}</p>
+        <p style="color: #666; font-size: 0.8em;">Zuletzt aktualisiert am: {{ ansible_facts['date_time']['date'] }} um {{ ansible_facts['date_time']['time'] }}</p>
     </div>
 </body>
 </html>
