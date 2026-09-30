@@ -1,6 +1,10 @@
 [meine_server]
 # Hier die echten IP-Adressen deiner Server eintragen.
 # Hinweis: Das Lab nutzt aus Sicherheitsgründen den Custom-SSH-Port 2222.
-192.168.X.X ansible_user=dein_username ansible_port=2222 ansible_interpreter_python=/usr/bin/python3
-192.168.X.X ansible_user=dein_username ansible_port=2222 ansible_interpreter_python=/usr/bin/python3.12
-
+#
+# Der Python-Interpreter wird zentral in group_vars/meine_server/db_and_web.yml
+# gesetzt (/usr/bin/python3 — auf Ubuntu wie CentOS der richtige Symlink).
+# Deshalb steht hier bewusst keine Angabe je Host: Dieselbe Einstellung an zwei
+# Orten läuft sonst irgendwann auseinander.
+192.168.X.X ansible_user=dein_username ansible_port=2222
+192.168.X.X ansible_user=dein_username ansible_port=2222

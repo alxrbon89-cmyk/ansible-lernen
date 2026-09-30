@@ -2,4 +2,8 @@
 # Variablen für die Webserver-Gruppe
 custom_web_title: "Willkommen auf meiner automatisierten Infrastruktur!"
 custom_admin_name: "testuser"
+# Python-Interpreter zentral für die ganze Gruppe — die einzige Stelle, an der
+# er gesetzt wird. /usr/bin/python3 ist auf Ubuntu wie CentOS der richtige
+# Symlink; ein fester Versionspfad (etwa python3.12) würde beim nächsten
+# Distributions-Upgrade ins Leere zeigen.
 ansible_python_interpreter: /usr/bin/python3
